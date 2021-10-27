@@ -1,0 +1,16 @@
+- hosts:
+  - ec2-db
+
+  tasks:
+    - name: "movendo arquivo de teste"
+      copy:
+        src: "mysql/teste.sql"
+        dest: "/tmp/teste.sql"
+      become: yes
+
+    - name: "comandos SQL"
+      shell: mysql -u root < /tmp/teste.sql
+      become: yes
+      register: ps
+    - debug:
+        msg: " '{{ps.stdout_lines }}' "
