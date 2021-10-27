@@ -1,0 +1,49 @@
+- hosts:
+  - ec2-db
+
+  tasks:
+    - name: Update and upgrade apt packages
+      become: true
+      apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400 #One day
+
+    - name: install packages required by mysql
+      become: true
+      apt:
+        update_cache: yes
+        state: latest
+        name:
+        - mysql-server
+          
+    - name: "movendo arquivo de conf mysql"
+      copy:
+        src: "mysql/mysqld.cnf"
+        dest: "/etc/mysql/mysql.conf.d/mysqld.cnf"
+      become: yes
+
+    - name: "Restart mysql"
+      shell: sudo systemctl restart mysql
+      become: yes
+
+
+    - name: "movendo arquivo dados sql"
+      copy:
+        src: "mysql/insertdados.sql"
+        dest: "/tmp/insertdados.sql"
+      become: yes
+
+    - name: "insert dados"
+      shell: mysql -u root < /tmp/insertdados.sql
+      become: yes
+
+    - name: "movendo arquivo de comandos sql"
+      copy:
+        src: "mysql/comandos-mysql.sql"
+        dest: "/tmp/comandos-mysql.sql"
+      become: yes
+
+    - name: "comandos SQL"
+      shell: mysql -u root < /tmp/comandos-mysql.sql
+      become: yes
