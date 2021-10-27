@@ -1,0 +1,13 @@
+- hosts:
+  - ec2-db
+
+  tasks:
+    - name: "movendo arquivo de comandos sql"
+      copy:
+        src: "mysql/comandos-mysql.sql"
+        dest: "/tmp/comandos-mysql.sql"
+      become: yes
+
+    - name: "comandos SQL"
+      shell: mysql -u root < /tmp/comandos-mysql.sql
+      become: yes
