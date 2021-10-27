@@ -37,13 +37,3 @@
     - name: "insert dados"
       shell: mysql -u root < /tmp/insertdados.sql
       become: yes
-
-    - name: "movendo arquivo de comandos sql"
-      copy:
-        src: "mysql/comandos-mysql.sql"
-        dest: "/tmp/comandos-mysql.sql"
-      become: yes
-
-    - name: "comandos SQL"
-      shell: mysql -u root < /tmp/comandos-mysql.sql
-      become: yes
