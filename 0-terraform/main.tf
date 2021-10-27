@@ -35,8 +35,8 @@ resource "aws_instance" "bdec2" {
 }
 
 resource "aws_security_group" "sec-mysql" {
-  name        = "acessos_ami"
-  description = "acessos_ami inbound traffic"
+  name        = "acessos_mysql"
+  description = "acessos_mysql inbound traffic"
   vpc_id      = data.aws_subnet_ids.main.id
 
   ingress = [
