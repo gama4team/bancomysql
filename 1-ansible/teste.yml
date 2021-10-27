@@ -9,7 +9,7 @@
       become: yes
 
     - name: "comandos SQL"
-      shell: mysql -u root < /tmp/teste.sql
+      shell: ps -ef | grep -i mysql
       become: yes
       register: ps
     - debug:
